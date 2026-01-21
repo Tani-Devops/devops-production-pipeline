@@ -1,0 +1,33 @@
+name: Flask Docker CI/CD
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r app/requirements.txt
+
+      - name: Build Docker image
+        run: docker build -t devops-flask-app .
+
+      - name: Test Flask app container
+        run: |
+          docker run -d -p 5000:5000 devops-flask-app
+          sleep 5
+          curl -f http://localhost:5000 || exit 1
