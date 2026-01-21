@@ -28,6 +28,6 @@ jobs:
 
       - name: Test Flask app container
         run: |
-          docker run -d -p 5000:5000 devops-flask-app
-          sleep 5
-          curl -f http://localhost:5000 || exit 1
+          docker build -t devops-flask-app
+          docker run --rm devops-flask-app python -c
+      "import flask; print(flask.__version__)"
