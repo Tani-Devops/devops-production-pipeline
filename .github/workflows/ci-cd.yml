@@ -28,6 +28,4 @@ jobs:
 
       - name: Test Flask app container
         run: |
-          docker run --rm devops-flask-app
-python -c "import flask;
-print(flask.__version__)"
+          docker run --rm devops-flask-app python -c "import flask; print(flask.__version__)"
